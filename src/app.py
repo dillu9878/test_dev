@@ -102,8 +102,9 @@ def isvalid():
 #runnig the webapp
 host, port = '0.0.0.0', 5000
 # mine_block()
-app.run(host, port, debug=True)
-
+# app.run(host, port, debug=True)
+if __name__ == '__main__':
+    app.run()
 
 
 
