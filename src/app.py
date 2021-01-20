@@ -120,7 +120,7 @@ class Blockchain:
             for i in block['transactions']:
                 if i['receiver'] == account_number:
                     amount += i['amount']
-                    transaction.append({'timestamp': i['timestamp'],
+                    transaction.append({'timestamp': block['timestamp'],
                                         'sender': i['sender'],
                                         'receiver': i['receiver'],
                                         'amount': i['amount'],
@@ -128,7 +128,7 @@ class Blockchain:
                                         })
                 elif i['sender'] == account_number:
                     amount -= i['amount']
-                    transaction.append({'timestamp': i['timestamp'],
+                    transaction.append({'timestamp': block['timestamp'],
                                         'sender': i['sender'],
                                         'receiver': i['receiver'],
                                         'amount': i['amount'],
@@ -145,7 +145,8 @@ class Blockchain:
                                     })
             elif i['sender'] == account_number:
                 amount -= i['amount']
-                transaction.append({'sender': i['sender'],
+                transaction.append({'timestamp': str(datetime.datetime.now()),
+                                    'sender': i['sender'],
                                     'receiver': i['receiver'],
                                     'amount': i['amount'],
                                     'status': 'pending'
@@ -317,7 +318,7 @@ def add_coin():
     json = request.get_json(force=True)
     transaction_keys = ['account_number', 'amount']
     blockchain.add_transaction('', json['account_number'], json['amount'])
-    transaction, amount = blockchain.find_all_transaction(json['sender'])
+    transaction, amount = blockchain.find_all_transaction(json['account_number'])
     response = {
         'amount': amount,
         'transactions': transaction
@@ -344,12 +345,12 @@ def join_network():
 
 
 
-
-#runnig the webapp
-# host, port = '0.0.0.0', 5004
-# mine_block()
 if __name__ == '__main__':
     app.run()
+    #runnig the webapp
+    # host, port = '0.0.0.0', 5004
+    # mine_block()
+    # app.run(host, port, debug=True)
 
 
 
