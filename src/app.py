@@ -268,7 +268,7 @@ def replace_chain():
 
 #####################
 #login##
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET'])
 def login():
     creds = request.get_json(force=True)
     public_key = creds['public_key']
@@ -287,7 +287,7 @@ def login():
         response['message'] = 'Wrong public key'
     return jsonify(response)
 
-@app.route('/send_coin', methods = ['POST'])
+@app.route('/send_coin', methods = ['GET'])
 def send_coin():
     json = request.get_json(force=True)
     transaction_keys = ['sender', 'receiver', 'amount']
@@ -302,7 +302,7 @@ def send_coin():
     }
     return jsonify(response), 201
 
-@app.route('/get_all_transactions', methods=['POST'])
+@app.route('/get_all_transactions', methods=['GET'])
 def get_all_trnsaction():
     json = request.get_json(force=True)
     transaction, amount = blockchain.find_all_transaction(json['account_number'])
@@ -313,7 +313,7 @@ def get_all_trnsaction():
     return jsonify(response), 201
 
 
-@app.route('/add_coin', methods= ['POST'])
+@app.route('/add_coin', methods= ['GET'])
 def add_coin():
     json = request.get_json(force=True)
     transaction_keys = ['account_number', 'amount']
